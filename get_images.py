@@ -5,7 +5,6 @@ import os
 import sys
 from shutil import copyfile
 
-
 if __name__ =='__main__':
     parser = argparse.ArgumentParser(description='Pull all relevant image files into a single directory')
     parser.add_argument('top_directory', type=str,
@@ -37,14 +36,14 @@ if __name__ =='__main__':
         proceed = input("\nProceed? [y/n]").upper()
         if proceed=='N':
             sys.exit()
-                    
-    
 
     search_string = top_dir+'/**/*'+filter_string+'*'+file_type
+    
     print("finding files matching the following: "+search_string+'...')
     all_image_files = glob.glob(search_string, recursive=True)
     all_image_files.sort()
     print('found '+str(len(all_image_files))+' files...\n')
+    
     print('first and last 3 files are: ')
     for image_name in all_image_files[:3] + all_image_files[-3:]:
         print(image_name)
@@ -52,6 +51,7 @@ if __name__ =='__main__':
     new_name = output_dir+'/'+image_name.split('/')[1]+'_'+image_name.split('/')[-1]
     print(new_name)
     proceed = input("\nProceed? [y/n]").upper()
+    
     if proceed=='Y':
         print('OK, as you wish...')
         for image_name in all_image_files:       
@@ -60,3 +60,5 @@ if __name__ =='__main__':
                 copyfile(image_name, new_name)
             else:
                 print('cp '+image_name+' '+new_name)
+    print('file copy complete!')
+    sys.exit()
