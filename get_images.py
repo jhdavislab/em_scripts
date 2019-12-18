@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/home/jhdavis/anaconda3/bin/python
 __author__ = "Joey Davis, www.jhdavislab.org"
 __version__ = "1.0"
 
