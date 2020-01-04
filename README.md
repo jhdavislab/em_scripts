@@ -6,3 +6,5 @@
 
 * create_symlink.py
   * an executable python script to parse a cryosparc .cs file and create symlinks for the subset of .mrc files in that cryosparc file. Most useful if you have curated micrographs in cryosparc and then want to just take that subset for processing in a different tool. Run create_symlink.py --help for details on usage.
+* relion_stats.sh
+  * bash tool to check on the progress of a relion Refine3D job.
