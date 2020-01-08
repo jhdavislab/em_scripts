@@ -1,6 +1,6 @@
 #!/home/jhdavis/anaconda3/bin/python
 __author__ = "Joey Davis, www.jhdavislab.org"
-__version__ = "1.0"
+__version__ = "1.1"
 
 import argparse
 import glob
@@ -20,6 +20,10 @@ if __name__ =='__main__':
                        help='substring in your image files you want to search for')
     parser.add_argument('--test', default=False, action='store_true',
                         help='just list the files that would be copied, but do not actually do anything')
+    parser.add_argument('--fractions', default=False, action='store_true',
+                        help='remove any files with the string "Fractions"')
+    parser.add_argument('--size', default=5e8, action='store_true',
+                        help='minimum size of files you want included')
     args = parser.parse_args()
 
     top_dir = vars(args)['top_directory']
@@ -27,6 +31,8 @@ if __name__ =='__main__':
     file_type = vars(args)['file_type']
     filter_string = vars(args)['filter']
     test_only = vars(args)['test']
+    remove_fractions = vars(args)['fractions']
+    size_limit = vars(args)['size']
 
     if test_only==True:
         print('=========TESTING ONLY, NOTHING WILL BE CHANGED===========')
@@ -42,9 +48,16 @@ if __name__ =='__main__':
 
     search_string = top_dir+'/**/*'+filter_string+'*'+file_type
     
-    print("finding files matching the following: "+search_string+'...')
-    all_image_files = glob.glob(search_string, recursive=True)
+    print("finding files matching the following: "+search_string+'...'+' size min: '+str(size_limit/1e6)+' MB')
+    all_image_files_pre = glob.glob(search_string, recursive=True)
+    all_image_files = [i for i in all_image_files_pre if os.stat(i).st_size >= size_limit]
     all_image_files.sort()
+    
+    if remove_fractions:
+        for image in all_image_files:
+            if "Fractions" in image:
+                all_image_files.remove(image)
+
     print('found '+str(len(all_image_files))+' files...\n')
     
     print('first and last 3 files are: ')
