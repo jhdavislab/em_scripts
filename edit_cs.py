@@ -49,7 +49,7 @@ def edit_field(np_cs, field, index, new_value):
     Args:
         np_cs (a numpy object): should be the output of parse_cs
         field (string): a string specifying which field to edit. Must be contained in the set of fields
-        index (numpy indexing): any object that can be used to index a numpy array
+        index (numpy indexing): any object that can be used to index a numpy array. This should be a tuple with the desired index.
         new_value (string): a string wiht the new value to insert
 
     Returns:
@@ -77,7 +77,7 @@ def write_cs(output_file_name, np_cs):
         write_cs('./modified_cs.cs, np_cs)
     '''
 
-    with open(output_file_name, 'w') as outfile:
+    with open(output_file_name, 'wb') as outfile:
         np.save(outfile, np_cs)
     
 if __name__ =='__main__':
@@ -103,4 +103,4 @@ if __name__ =='__main__':
 
     np_cs = parse_cs(input_file)
     np_cs_new = edit_field(np_cs, field, particle_index, new_value)
-    write_cs(np_cs_new)
+    write_cs(output_file, np_cs_new)

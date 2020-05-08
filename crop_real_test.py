@@ -51,7 +51,7 @@ if __name__ == '__main__':
     dims = vars(args)['crop_dimensions']
     dim_x, dim_y = dims.split(',')
 
-    crop_stack(input_stack, output_stack, dim_x, dim_y, e2_path)
+#    crop_stack(input_stack, output_stack, dim_x, dim_y, e2_path)
     if cs_file != '':
         print("...preparing to edit .cs file to reflect the new box size. New file will be:")
         new_file_name = cs_file.split('.cs')[0]+'_'+dim_x+'x'+dim_y+'.cs'

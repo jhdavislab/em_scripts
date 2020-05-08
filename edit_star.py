@@ -93,7 +93,7 @@ def write_star(output_file_name, star_dictionary):
     df = star_dictionary['dataframe']    
     cols = df.columns
     spaces = star_dictionary['space_sequence']    
-    with open(output_file_name, 'w') as outfile:
+    with open(output_file_name, 'wb') as outfile:
         outfile.writelines(star_dictionary['preamble'])
         for col_index, col_name in enumerate(star_dictionary['header']):
             outfile.write(col_name + ' ' + '#' + str(col_index+1) + '\n')
