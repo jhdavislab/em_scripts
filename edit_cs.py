@@ -56,7 +56,7 @@ def edit_field(np_cs, field, index, new_value):
         new_np_cs (a numpy object): the updated numpy cryosparc object
 
     Usage:
-        edited_spherical_ab = edit_field(np_cs, 'ctf/cs_mm', ':', 2.7)
+        edited_spherical_ab = edit_field(np_cs, 'ctf/cs_mm', 'slice(0,-1)', 2.7)
     '''
     
     info = get_fields(np_cs)
@@ -82,7 +82,7 @@ def write_cs(output_file_name, np_cs):
     
 if __name__ =='__main__':
     parser = argparse.ArgumentParser(description='Edit a cryosparcv2 file',
-                                    epilog='Example usage: python3 edit_cs.py input.cs output.cs ctf/cs_mm 2.7 --particle_index 0:100')
+                                    epilog='Example usage: python3 edit_cs.py input.cs output.cs ctf/cs_mm 2.7 --particle_index slice(0:-1)')
     parser.add_argument('input_file', type=str,
                        help='path to the file to edit')
     parser.add_argument('output_file', type=str,
