@@ -1,4 +1,4 @@
-#!/home/jhdavis/anaconda3/envs/default/bin/python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Created on Wed Dec 11 20:49:28 2019
