@@ -1,4 +1,4 @@
-#!/home/jhdavis/anaconda3/envs/default/bin/python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Created on Wed Dec 11 20:49:28 2019
@@ -56,7 +56,7 @@ def edit_field(np_cs, field, index, new_value):
         new_np_cs (a numpy object): the updated numpy cryosparc object
 
     Usage:
-        edited_spherical_ab = edit_field(np_cs, 'ctf/cs_mm', ':', 2.7)
+        edited_spherical_ab = edit_field(np_cs, 'ctf/cs_mm', 'slice(0,-1)', 2.7)
     '''
     
     info = get_fields(np_cs)
@@ -82,7 +82,7 @@ def write_cs(output_file_name, np_cs):
     
 if __name__ =='__main__':
     parser = argparse.ArgumentParser(description='Edit a cryosparcv2 file',
-                                    epilog='Example usage: python3 edit_cs.py input.cs output.cs ctf/cs_mm 2.7 --particle_index 0:100')
+                                    epilog='Example usage: python3 edit_cs.py input.cs output.cs ctf/cs_mm 2.7 --particle_index slice(0:-1)')
     parser.add_argument('input_file', type=str,
                        help='path to the file to edit')
     parser.add_argument('output_file', type=str,
@@ -91,7 +91,7 @@ if __name__ =='__main__':
                         help='field to edit')
     parser.add_argument('new_value', type=str,
                         help='string to insert in this field')
-    parser.add_argument('--particle_index', default=':',
+    parser.add_argument('--particle_index', default='slice(0,-1)',
                         help='optional string to index by particle numbers')
     args = parser.parse_args()
 
@@ -99,7 +99,7 @@ if __name__ =='__main__':
     output_file= vars(args)['output_file']
     field= vars(args)['field_to_edit']
     new_value = vars(args)['new_value']
-    particle_index = vars(args)['particle_index']
+    particle_index = eval(vars(args)['particle_index'])
 
     np_cs = parse_cs(input_file)
     np_cs_new = edit_field(np_cs, field, particle_index, new_value)
