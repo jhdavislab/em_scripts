@@ -22,7 +22,7 @@ if __name__ =='__main__':
                         help='just list the files that would be copied, but do not actually do anything')
     parser.add_argument('--fractions', default=False, action='store_true',
                         help='remove any files with the string "Fractions"')
-    parser.add_argument('--size', default=5e8, action='store_true',
+    parser.add_argument('--size', default=100, type=float,
                         help='minimum size of files you want included')
     args = parser.parse_args()
 
@@ -36,19 +36,19 @@ if __name__ =='__main__':
 
     if test_only==True:
         print('=========TESTING ONLY, NOTHING WILL BE CHANGED===========')
-
-    try:
-        os.mkdir(output_dir)
-        print("Directory " , output_dir ,  " created...") 
-    except FileExistsError:
-        print("Directory " , output_dir ,  " already exists")
-        proceed = input("\nProceed? [y/n]").upper()
-        if proceed=='N':
-            sys.exit()
+    else:
+        try:
+            os.mkdir(output_dir)
+            print("Directory " , output_dir ,  " created...") 
+        except FileExistsError:
+            print("Directory " , output_dir ,  " already exists")
+            proceed = input("\nProceed? [y/n]").upper()
+            if proceed=='N':
+                sys.exit()
 
     search_string = top_dir+'/**/*'+filter_string+'*'+file_type
     
-    print("finding files matching the following: "+search_string+'...'+' size min: '+str(size_limit/1e6)+' MB')
+    print("finding files matching the following: "+search_string+'...')
     all_image_files_pre = glob.glob(search_string, recursive=True)
     all_image_files = [i for i in all_image_files_pre if os.stat(i).st_size >= size_limit]
     all_image_files.sort()
