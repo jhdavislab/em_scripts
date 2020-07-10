@@ -18,3 +18,6 @@
 
 * edit_star.py
   * a python script to edit relion .star files
+
+* convert_py.star
+  * a python script using emans e2proc2d.py to convert .mrc files to the file type of your choice.
