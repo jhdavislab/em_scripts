@@ -5,11 +5,12 @@ by members of the Davis lab at MIT.
 __VERSION__ = 0.0.2
 
 Directories provide overall structure and include the following:
+
 --analyze--
 * Provides tools to analyze metafiles (.cs or .star) or to view .mrc files
- * analyze_2Dclassification.ipynb - jupyter notebook to inspect cryosparc 2D classification results.
- * analyze_3Dhetrefine.ipynb - jupyter notebook to inpsect cryopsarc 3D heterogeneous refinement results.
- * view_stack.py - python script to view first 9 images of a .mrc file stack
+  * analyze_2Dclassification.ipynb - jupyter notebook to inspect cryosparc 2D classification results.
+  * analyze_3Dhetrefine.ipynb - jupyter notebook to inpsect cryopsarc 3D heterogeneous refinement results.
+  * view_stack.py - python script to view first 9 images of a .mrc file stack
 
 --bsh--
 * Provides bash scripts to automate some common tasks
