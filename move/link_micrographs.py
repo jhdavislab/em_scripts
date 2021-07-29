@@ -1,3 +1,7 @@
+#!/home/jhdavis/anaconda3/bin/python
+__author__ = "Joey Davis, www.jhdavislab.org"
+__version__ = "1.1"
+
 import os
 import sys
 import random
@@ -9,6 +13,7 @@ def add_args(parser):
     parser.add_argument('extension', type=str, help='extension of the filename to link - typically _fractions.tiff or _fractions.mrc')
     parser.add_argument('fraction', type=float, help='fraction of the movies to link - typically 1.0 for all or 0.1 for 10%%.')
     parser.add_argument('--execute', default=False, action='store_true', help='peform the job instead of simply testing')
+    parser.add_argument('--unstructured', default=False, action='store_true', help='will not look for the "Data" folder and will instead link all files it finds in the root or lower that have the proper extension.')
     return parser
 
 def main(args):
@@ -25,18 +30,18 @@ def main(args):
     for root, subdirs, files in os.walk(rootdir):
         if 'GridSquare' in root.split('/')[-1]:
             print('Inspecting gridsquare: ' + root.split('/')[-1])
-        if 'Data' in root.split('/')[-1]:
+        if 'Data' in root.split('/')[-1] or args.unstructured:
             data_images = [selected_file for selected_file in files if selected_file[-len(extension):]==extension]
             print('Found ' + str(len(data_images)) + ' data images.')
             num = int(len(data_images)*fraction)
             print('Selecting ' + str(num) + ' data images.')
             selected_images = random.sample(data_images, num)
-            print('Creating symbolic links...')
+            print('Creating ' + str(len(selected_images)) + ' symbolic links...')
             for f in selected_images:
-                if vars(args)['execute']:
+                if args.execute:
                     os.symlink(root+'/'+f, outdir+f)
                 else:
-                    print('*test* - would create smylink: ' + root+'/'+f + '-->' + outdir+f)
+                    print('*test** - with the --execute flag, would create smylink: ' + root+'/'+f + '-->' + outdir+f)
             num_total+=len(data_images)
             num_selected+=num
 
