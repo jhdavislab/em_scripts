@@ -24,13 +24,15 @@ def main(args):
 
     if outdir[-1] != '/':
         outdir+='/'
+    if rootdir[-1] != '/':
+        roodir+='/'
 
     num_total = 0
     num_selected = 0
     for root, subdirs, files in os.walk(rootdir):
         if 'GridSquare' in root.split('/')[-1]:
-            print('Inspecting gridsquare: ' + root.split('/')[-1])
-        if 'Data' in root.split('/')[-1] or args.unstructured:
+            print('Inspecting gridsquare: ' + root.split('/')[-2])
+        if 'Data' in root.split('/')[-2] or args.unstructured:
             data_images = [selected_file for selected_file in files if selected_file[-len(extension):]==extension]
             print('Found ' + str(len(data_images)) + ' data images.')
             num = int(len(data_images)*fraction)
@@ -39,9 +41,9 @@ def main(args):
             print('Creating ' + str(len(selected_images)) + ' symbolic links...')
             for f in selected_images:
                 if args.execute:
-                    os.symlink(root+'/'+f, outdir+f)
+                    os.symlink(root+f, outdir+f)
                 else:
-                    print('*test** - with the --execute flag, would create smylink: ' + root+'/'+f + '-->' + outdir+f)
+                    print('*test** - with the --execute flag, would create smylink: ' + root+f + '-->' + outdir+f)
             num_total+=len(data_images)
             num_selected+=num
 
