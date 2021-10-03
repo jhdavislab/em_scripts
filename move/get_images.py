@@ -1,4 +1,4 @@
-#!/home/jhdavis/anaconda3/bin/python
+#!/raid5/home/jhdavis/miniconda3/bin/python
 __author__ = "Joey Davis, www.jhdavislab.org"
 __version__ = "1.1"
 
@@ -18,6 +18,8 @@ if __name__ =='__main__':
                         help='string for the type of files to grab (e.g. .tiff, .mrc, etc')
     parser.add_argument('--filter', default='FoilHole_*_Data', type=str,
                        help='substring in your image files you want to search for')
+    parser.add_argument('--link', default=False, action='store_true',
+                        help='create symbolic links instead of copies')
     parser.add_argument('--test', default=False, action='store_true',
                         help='just list the files that would be copied, but do not actually do anything')
     parser.add_argument('--fractions', default=False, action='store_true',
@@ -31,6 +33,7 @@ if __name__ =='__main__':
     file_type = vars(args)['file_type']
     filter_string = vars(args)['filter']
     test_only = vars(args)['test']
+    link = vars(args)['link']
     remove_fractions = vars(args)['fractions']
     size_limit = vars(args)['size']
 
@@ -73,7 +76,10 @@ if __name__ =='__main__':
         for image_name in all_image_files:       
             new_name = output_dir+'/'+image_name.split('/')[1]+'_'+image_name.split('/')[-1]
             if test_only==False:
-                copyfile(image_name, new_name)
+                if link:
+                    os.symlink(image_name, new_name)
+                else:
+                    copyfile(image_name, new_name)
             else:
                 print('cp '+image_name+' '+new_name)
     print('file copy complete!')
